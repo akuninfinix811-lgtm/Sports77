@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Sports77HD Stream</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background-color: #000; overflow: hidden; }
+    .stream-box { width: 100%; height: 100vh; position: relative; }
+    .stream-box iframe { width: 100%; height: 100%; border: 0; }
+    #click-trigger {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 999999; background: transparent; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Layer pop-under Shopee -->
+  <div id="click-trigger"></div>
+
+  <!-- Box Pemutar Video -->
+  <div class="stream-box">
+    <iframe id="video-iframe" src="" title="Live Stream" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    // DAFTAR PERTANDINGAN & LINK STARBALL
+    const matches = {
+      "liverpool": {
+        title: "Liverpool vs Nottingham",
+        src: "https://starballtv010.blogspot.com/2026/08/lino.html"
+      },
+      "leipzig": {
+        title: "Rb Leipzig vs M'gladbach",
+        src: "https://starballtv010.blogspot.com/2026/08/lemon.html"
+      },
+      "bournemouth": {
+        title: "Bournemouth vs Everton",
+        src: "https://starballtv010.blogspot.com/2026/08/boev.html"
+      },
+      "levante": {
+        title: "Levante vs Real Betis",
+        src: "https://starballtv010.blogspot.com/2026/08/lebe.html"
+      },
+      "alkholood": {
+        title: "Al khoolod vs Al Ahli",
+        src: "https://starballtv010.blogspot.com/2026/08/khah.html"
+      },
+      "fiorentina": {
+        title: "Fiorentina vs Frosinone",
+        src: "https://starballtv010.blogspot.com/2026/08/fifr.html"
+      },
+      "tottenham": {
+        title: "Tottenham vs Newcastle",
+        src: "https://starballtv010.blogspot.com/2026/08/tone.html"
+      },
+      "dortmund": {
+        title: "Dortmund vs Hamburger",
+        src: "https://starballtv010.blogspot.com/2026/08/doha.html"
+      },
+      "sassuolo": {
+        title: "Sassuolo vs Torino",
+        src: "https://starballtv010.blogspot.com/2026/08/sato.html"
+      },
+      "sevilla": {
+        title: "Sevilla vs Atletico Madrid",
+        src: "https://starballtv010.blogspot.com/2026/08/seat.html"
+      },
+      "intermiami": {
+        title: "Inter Miami vs Montreal",
+        src: "https://starballtv010.blogspot.com/2026/08/inmon.html"
+      }
+    };
+
+    // Baca parameter ?id= dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const matchId = urlParams.get('id');
+
+    // Tampilkan pertandingan sesuai ID di URL
+    if (matchId && matches[matchId]) {
+      document.getElementById('video-iframe').src = matches[matchId].src;
+      document.getElementById('page-title').innerText = "Sports77HD - " + matches[matchId].title;
+    } else {
+      // Default ke Liverpool jika tidak ada parameter id
+      document.getElementById('video-iframe').src = matches["liverpool"].src;
+      document.getElementById('page-title').innerText = "Sports77HD - " + matches["liverpool"].title;
+    }
+
+    // Klik Pertama Buka Shopee
+    var trigger = document.getElementById('click-trigger');
+    if (trigger) {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.open('https://s.shopee.co.id/2BE1TCTXbN', '_blank');
+        trigger.remove();
+      }, { once: true });
+    }
+  </script>
+
+</body>
+</html>
