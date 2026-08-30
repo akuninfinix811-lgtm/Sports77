@@ -19,51 +19,51 @@
   </div>
 
   <script>
-    // DAFTAR PERTANDINGAN
+    // DAFTAR PERTANDINGAN HARI INI
     const matches = {
-      "liverpool": {
-        title: "Liverpool vs Nottingham",
-        src: "https://starballtv010.blogspot.com/2026/08/lino.html"
+      "chelsea": {
+        title: "Chelsea vs Brighton",
+        src: "https://starballtv010.blogspot.com/2026/08/chbr.html"
       },
-      "leipzig": {
-        title: "Rb Leipzig vs M'gladbach",
-        src: "https://starballtv010.blogspot.com/2026/08/lemon.html"
+      "leeds": {
+        title: "Leeds vs Brentford",
+        src: "https://starballtv010.blogspot.com/2026/08/lebri.html"
       },
-      "bournemouth": {
-        title: "Bournemouth vs Everton",
-        src: "https://starballtv010.blogspot.com/2026/08/boev.html"
+      "sunderland": {
+        title: "Sunderland vs Fulham",
+        src: "https://starballtv010.blogspot.com/2026/08/sufu.html"
       },
-      "levante": {
-        title: "Levante vs Real Betis",
-        src: "https://starballtv010.blogspot.com/2026/08/lebe.html"
+      "realmadrid": {
+        title: "Real Madrid vs Malaga",
+        src: "https://starballtv010.blogspot.com/2026/08/mama.html"
       },
-      "alkholood": {
-        title: "Al khoolod vs Al Ahli",
-        src: "https://starballtv010.blogspot.com/2026/08/khah.html"
+      "napoli": {
+        title: "Napoli vs Como",
+        src: "https://starballtv010.blogspot.com/2026/08/naco.html"
       },
-      "fiorentina": {
-        title: "Fiorentina vs Frosinone",
-        src: "https://starballtv010.blogspot.com/2026/08/fifr.html"
+      "deportivo": {
+        title: "Deportivo vs Valencia",
+        src: "https://starballtv010.blogspot.com/2026/08/lava.html"
       },
-      "tottenham": {
-        title: "Tottenham vs Newcastle",
-        src: "https://starballtv010.blogspot.com/2026/08/tone.html"
+      "alqadsiah": {
+        title: "Al Qadsiah vs Al Faisaly",
+        src: "https://starballtv010.blogspot.com/2026/08/qafa.html"
       },
-      "dortmund": {
-        title: "Dortmund vs Hamburger",
-        src: "https://starballtv010.blogspot.com/2026/08/doha.html"
+      "intermilan": {
+        title: "Cagliari vs Inter Milan",
+        src: "https://starballtv010.blogspot.com/2026/08/cain.html"
       },
-      "sassuolo": {
-        title: "Sassuolo vs Torino",
-        src: "https://starballtv010.blogspot.com/2026/08/sato.html"
+      "lazio": {
+        title: "Lazio vs Genoa",
+        src: "https://starballtv010.blogspot.com/2026/08/lage.html"
       },
-      "sevilla": {
-        title: "Sevilla vs Atletico Madrid",
-        src: "https://starballtv010.blogspot.com/2026/08/seat.html"
+      "monaco": {
+        title: "AS Monaco vs Marseille",
+        src: "https://starballtv010.blogspot.com/2026/08/moma.html"
       },
-      "intermiami": {
-        title: "Inter Miami vs Montreal",
-        src: "https://starballtv010.blogspot.com/2026/08/inmon.html"
+      "celta": {
+        title: "Celta vs Athletic Bilbao",
+        src: "https://starballtv010.blogspot.com/2026/08/ceat.html"
       }
     };
 
@@ -71,14 +71,14 @@
     const urlParams = new URLSearchParams(window.location.search);
     const matchId = (urlParams.get('id') || '').trim().toLowerCase();
 
-    // Pilih pertandingan (Default: liverpool)
-    const activeMatch = matches[matchId] || matches["liverpool"];
+    // Pilih pertandingan berdasarkan ID (Default ke Chelsea jika ID tidak ditemukan)
+    const activeMatch = matches[matchId] || matches["chelsea"];
 
-    // Load iframe & ubah judul
+    // Pasang sumber video dan judul halaman
     document.getElementById('video-iframe').src = activeMatch.src;
     document.getElementById('page-title').innerText = "Sports77HD - " + activeMatch.title;
 
-    // Pop-under Shopee pada klik pertama di manapun
+    // Pop-under Shopee pada klik pertama
     let popped = false;
     window.addEventListener('click', function() {
       if (!popped) {
