@@ -14,8 +14,10 @@
 
     html, body {
       width: 100%;
-      min-height: 100%;
+      height: 100%;
+      overflow: hidden;
       background-color: #000;
+      font-family: Arial, sans-serif;
     }
 
     /* =========================
@@ -154,7 +156,6 @@
 
   <!-- =========================
        BANNER JOIN WHATSAPP
-       GANTI LINK DI BAWAH
        ========================= -->
   <a
     href="https://whatsapp.com/channel/0029VbD5rXAJ93wYhP08tc3D"
@@ -181,7 +182,6 @@
        FRAME EMBED
        ========================= -->
   <div class="stream-box">
-
     <!-- Overlay iklan -->
     <div id="ad-overlay"></div>
 
@@ -192,7 +192,6 @@
       allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
       allowfullscreen>
     </iframe>
-
   </div>
 
   <script>
@@ -204,62 +203,50 @@
         title: "Lecce vs AS Roma",
         src: "https://starballtv010.blogspot.com/2026/09/nebo.html?m=1"
       },
-
       "maco": {
         title: "Aston Villa vs Arsenal",
         src: "https://starballtv010.blogspot.com/2026/09/maco.html"
       },
-
       "noto": {
         title: "Barcelona vs Vallecano",
         src: "https://starballtv010.blogspot.com/2026/09/noto.html"
       },
-
       "atat": {
         title: "Aston Villa vs Arsenal",
         src: "https://starballtv010.blogspot.com/2026/09/atat.html"
       },
-
-      "inna: {
+      "inna": { // Perbaikan tanda petik penutup di sini
         title: "Real Madrid vs Malaga",
         src: "https://starballtv010.blogspot.com/2026/09/inna.html"
       },
-
       "huas": {
         title: "Napoli vs Como",
         src: "https://starballtv010.blogspot.com/2026/09/huas.html"
       },
-
       "moel": {
         title: "Deportivo vs Valencia",
         src: "https://starballtv010.blogspot.com/2026/09/moel.html?m=1"
       },
-
       "scmu": {
         title: "Al Qadsiah vs Al Faisaly",
         src: "https://starballtv010.blogspot.com/2026/09/scmu.html"
       },
-
       "ajps": {
         title: "Cagliari vs Inter Milan",
         src: "https://starballtv010.blogspot.com/2026/09/ajps.html"
       },
-
       "roat": {
         title: "Lazio vs Genoa",
         src: "https://starballtv010.blogspot.com/2026/09/roat.html"
       },
-
       "inat": {
         title: "AS Monaco vs Marseille",
         src: "https://starballtv010.blogspot.com/2026/09/inat.html"
       },
-
       "liga1": {
         title: "liga indo",
         src: "https://sabutv.com/server/event.m3u8?ch=12&proxy=1"
       },
-
       "rara": {
         title: "Celta vs Athletic Bilbao",
         src: "https://starballtv010.blogspot.com/2026/09/rara.html?m=1"
@@ -270,14 +257,11 @@
     // AMBIL PARAMETER ?id=
     // =========================
     const urlParams = new URLSearchParams(window.location.search);
-
-    const matchId = (urlParams.get("id") || "")
-      .trim()
-      .toLowerCase();
+    const matchId = (urlParams.get("id") || "").trim().toLowerCase();
 
     // Default aman jika ID tidak ditemukan
     const fallbackMatch = {
-      title: "Live Stream",
+      title: "Live Stream Tidak Ditemukan",
       src: "about:blank"
     };
 
@@ -287,9 +271,7 @@
     // SET SUMBER VIDEO & JUDUL
     // =========================
     document.getElementById("video-iframe").src = activeMatch.src;
-
-    document.getElementById("page-title").innerText =
-      "Sports77HD - " + activeMatch.title;
+    document.getElementById("page-title").innerText = "Sports77HD - " + activeMatch.title;
 
     // =========================
     // LOGIKA IKLAN SHOPEE
@@ -297,14 +279,7 @@
     const overlay = document.getElementById("ad-overlay");
 
     overlay.addEventListener("click", function () {
-
-      window.open(
-        "https://s.shopee.co.id/2BE1TCTXbN",
-        "_blank"
-      );
-
-      // Setelah klik pertama, overlay dihapus
-      // supaya pengguna bisa berinteraksi dengan iframe.
+      window.open("https://s.shopee.co.id/2BE1TCTXbN", "_blank");
       overlay.remove();
     });
   </script>
