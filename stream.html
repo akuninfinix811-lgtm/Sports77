@@ -1,130 +1,190 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+      Menangkap sentuhan pertama.
+      Setelah diklik, overlay langsung hilang.
+    -->
+    <div
+      id="ad-overlay"
+      role="button"
+      aria-label="Lanjutkan ke video"
+    ></div>
 
-  <title id="page-title">Sports77HD - Live Stream</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: #000;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow: hidden;
-    }
-
-    .stream-box {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 300px;
-      background: #000;
-      overflow: hidden;
-    }
-
-    #video-player {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      object-fit: contain;
-    }
-  </style>
-</head>
-
-<body>
-
-  <main class="stream-box">
-    <video id="video-player" controls autoplay playsinline preload="auto"></video>
   </main>
 
+
   <script>
+
+    /* =========================
+       DAFTAR PERTANDINGAN
+       ========================= */
+
     const matches = {
-      "player1": { title: "player1", src: "GANTI_URL_PLAYER_1" },
-      "player2": { title: "player2", src: "https://cdn.aceimg.com/ubJO6kO42.mp4" },
-      "player3": { title: "player3", src: "https://cdn.aceimg.com/826XWyBMo.mp4" },
-      "player4": { title: "player4", src: "https://cdn.aceimg.com/bnmNv3Ts3.mp4" },
-      "player5": { title: "player5", src: "https://cdn.aceimg.com/sFAvLimyG.mp4" },
-      "player6": { title: "player6", src: "https://cdn.aceimg.com/IZqW6KP5t.mp4" },
-      "player7": { title: "player7", src: "https://cdn.aceimg.com/jXXuHj71u.mp4" },
-      "player8": { title: "player8", src: "https://cdn.aceimg.com/2YC18Lrfn.mp4" },
-      "player9": { title: "player9", src: "https://cdn.aceimg.com/eJVWRDKu3.mp4" },
-      "player10": { title: "player10", src: "https://cdn.aceimg.com/mcFiucngf.mp4" },
-      "player11": { title: "player11", src: "https://cdn.aceimg.com/dVAkjQbGK.mp4" },
-      "player12": { title: "player12", src: "https://cdn.aceimg.com/0nQ6OEMxr.mp4" },
-      "player13": { title: "player13", src: "https://cdn.aceimg.com/28ixN2kFz.mp4" },
-      "player14": { title: "player14", src: "https://cdn.aceimg.com/DZLNFadXv.mp4" },
-      "player15": { title: "player15", src: "https://cdn.aceimg.com/qxUNpfcg6.mp4" },
-      "player16": { title: "player16", src: "https://cdn.aceimg.com/qxUNpfcg6.mp4" },
-      "player17": { title: "player17", src: "https://cdn.aceimg.com/RwXaux6AN.mp4" },
-      "player18": { title: "player18", src: "https://cdn.aceimg.com/VArvG3JMB.mp4" },
-      "player19": { title: "player19", src: "URL_19" },
-      "player20": { title: "player20", src: "URL_20" },
-      "player21": { title: "player21", src: "URL_21" },
-      "player22": { title: "player22", src: "URL_22" },
-      "player23": { title: "player23", src: "URL_23" },
-      "player24": { title: "player24", src: "URL_24" },
-      "player25": { title: "player25", src: "URL_25" },
-      "player26": { title: "player26", src: "URL_26" },
-      "player27": { title: "player27", src: "URL_27" },
-      "player28": { title: "player28", src: "URL_28" },
-      "player29": { title: "player29", src: "URL_29" },
-      "player30": { title: "player30", src: "URL_30" }
-    };
 
-    const params = new URLSearchParams(window.location.search);
-    const matchId = (params.get("id") || "").trim().toLowerCase();
+      "desah": {
+        title: "bokep indo viral",
+        src: "https://aceimg.com/upload/?f=2mEaEuQg4.mp4"
+      },
 
-    const activeMatch = matches[matchId] || {
-      title: "Live Stream",
-      src: ""
-    };
+      "cindo": {
+        title: "cindo",
+        src: "https://aceimg.com/upload/?f=2mEaEuQg4.mp4"
+      },
 
-    const video = document.getElementById("video-player");
+      "proplayer1": {
+        title: "Barcelona vs Vallecano",
+        src: "tribunvideo.com/f/ccyvim9v0u7"
+      },
 
-    document.title = "Sports77HD - " + activeMatch.title;
+      "priplayer3": {
+        title: "Aston Villa vs Arsenal",
+        src: "tribunvideo.com/f/5quuw0w8as8"
+      },
 
-    const pageTitle = document.getElementById("page-title");
-    if (pageTitle) {
-      pageTitle.textContent = "Sports77HD - " + activeMatch.title;
-    }
+      "tembem": {
+        title: "Real Madrid vs Malaga",
+        src: "https://autumn-field-e635.andinirosalin3.workers.dev"
+      },
 
-    let hls = null;
+      "napoli": {
+        title: "Napoli vs Como",
+        src: "https://starballtv010.blogspot.com/2026/08/naco.html"
+      },
 
-    if (activeMatch.src) {
-      if (activeMatch.src.toLowerCase().includes(".m3u8")) {
-        if (video.canPlayType("application/vnd.apple.mpegurl")) {
-          video.src = activeMatch.src;
-          video.load();
-        } else if (typeof Hls !== "undefined" && Hls.isSupported()) {
-          hls = new Hls();
-          hls.loadSource(activeMatch.src);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            video.play().catch(function () {});
-          });
-        }
-      } else {
-        video.src = activeMatch.src;
-        video.load();
-        video.play().catch(function () {});
+      "deportivo": {
+        title: "Deportivo vs Valencia",
+        src: "https://starballtv010.blogspot.com/2026/08/lava.html"
+      },
+
+      "alqadsiah": {
+        title: "Al Qadsiah vs Al Faisaly",
+        src: "https://starballtv010.blogspot.com/2026/08/qafa.html"
+      },
+
+      "intermilan": {
+        title: "Cagliari vs Inter Milan",
+        src: "https://starballtv010.blogspot.com/2026/08/cain.html"
+      },
+
+      "gogo": {
+        title: "Lazio vs Genoa",
+        src: "https://sabutv.com/server/event.m3u8?ch=12&proxy=1"
+      },
+
+      "viral": {
+        title: "AS Monaco vs Marseille",
+        src: "https://aceimg.com/upload/?f=v5yPsxHaU.mp4"
+      },
+
+      "mentok": {
+        title: "MotoGP",
+        src: "https://aceimg.com/upload/?f=3i5f3YUWh.mp4"
+      },
+
+      "sp": {
+        title: "Celta vs Athletic Bilbao",
+        src: "https://aceimg.com/upload/?f=jQ4piDo7n.mp4"
       }
-    }
+
+    };
+
+
+    /* =========================
+       AMBIL ?id=
+       ========================= */
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const matchId =
+      (params.get("id") || "")
+        .trim()
+        .toLowerCase();
+
+
+    /* =========================
+       FALLBACK
+       ========================= */
+
+    const fallbackMatch = {
+      title: "Live Stream",
+      src: "about:blank"
+    };
+
+
+    /* =========================
+       PILIH STREAM
+       ========================= */
+
+    const activeMatch =
+      matches[matchId] || fallbackMatch;
+
+
+    /* =========================
+       LOAD IFRAME
+       ========================= */
+
+    const iframe =
+      document.getElementById("video-iframe");
+
+    iframe.src = activeMatch.src;
+
+
+    /* =========================
+       JUDUL
+       ========================= */
+
+    document.title =
+      "Sports77HD - " + activeMatch.title;
+
+    document.getElementById("page-title")
+      .textContent =
+      "Sports77HD - " + activeMatch.title;
+
+
+    /* =========================
+       IKLAN SHOPEE
+       ========================= */
+
+    const overlay =
+      document.getElementById("ad-overlay");
+
+    const SHOPEE_URL =
+      "https://s.shopee.co.id/2gAtB1h0zd";
+
+
+    let adOpened = false;
+
+
+    overlay.addEventListener(
+      "click",
+      function () {
+
+        if (adOpened) {
+          return;
+        }
+
+        adOpened = true;
+
+        /*
+          Buka iklan dari aksi klik user.
+        */
+        window.open(
+          SHOPEE_URL,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+        /*
+          Lepaskan overlay setelah
+          klik pertama.
+        */
+        overlay.classList.add("hidden");
+
+      },
+      {
+        once: true
+      }
+    );
+
   </script>
 
 </body>
