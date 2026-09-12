@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title id="page-title">Sports77HD - Live Stream</title>
-
-  <!-- HLS.js untuk .m3u8 -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title id="page-title">Sports77HD - Live Stream</title>  <!-- HLS.js untuk memutar .m3u8 -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>  <style>
     * {
       margin: 0;
       padding: 0;
@@ -189,30 +181,6 @@
     }
 
     /* =========================
-       ERROR
-       ========================= */
-
-    #stream-error {
-      position: absolute;
-
-      inset: 0;
-
-      display: none;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 20px;
-
-      color: #fff;
-      background: #000;
-
-      text-align: center;
-
-      font-size: 14px;
-    }
-
-    /* =========================
        MOBILE
        ========================= */
 
@@ -245,91 +213,69 @@
         font-size: 9px;
       }
     }
-  </style>
-</head>
-
-<body>
-
-  <!-- =========================
+  </style></head><body>  <!-- =========================
        WHATSAPP
-       ========================= -->
+       ========================= --><a
+href="https://whatsapp.com/channel/0029VbD5rXAJ93wYhP08tc3D"
+target="_blank"
+rel="noopener noreferrer"
+class="wa-banner"
 
-  <a
-    href="https://whatsapp.com/channel/0029VbD5rXAJ93wYhP08tc3D"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="wa-banner"
-  >
+«»
 
-    <div class="wa-icon">
-      💬
-    </div>
+<div class="wa-icon">
+  💬
+</div>
 
-    <div class="wa-content">
+<div class="wa-content">
 
-      <div class="wa-title">
-        Join Saluran
-        <span>sports77</span>
-      </div>
+  <div class="wa-title">
+    Join Saluran
+    <span>sports77</span>
+  </div>
 
-      <div class="wa-subtitle">
-        Dapatkan update link streaming,
-        jadwal bola & info terbaru!
-      </div>
+  <div class="wa-subtitle">
+    Dapatkan update link streaming,
+    jadwal bola & info terbaru!
+  </div>
 
-    </div>
+</div>
 
-    <div class="wa-join">
-      JOIN
-    </div>
+<div class="wa-join">
+  JOIN
+</div>
 
-  </a>
-
-
-  <!-- =========================
+  </a>  <!-- =========================
        STREAM
-       ========================= -->
-
-  <main class="stream-box">
-
-    <!-- Player MP4 / M3U8 -->
-    <video
-      id="video-player"
-      controls
-      playsinline
-      webkit-playsinline
-      preload="metadata"
-      controlsList="nodownload"
-    ></video>
+       ========================= -->  <main class="stream-box"><!-- Player MP4 / M3U8 -->
+<video
+  id="video-player"
+  controls
+  playsinline
+  webkit-playsinline
+  preload="metadata"
+  controlsList="nodownload"
+></video>
 
 
-    <!-- Player IFRAME -->
-    <iframe
-      id="video-iframe"
-      src="about:blank"
-      title="Live Stream"
-      allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-      allowfullscreen>
-    </iframe>
+<!-- Player IFRAME -->
+<iframe
+  id="video-iframe"
+  src="about:blank"
+  title="Live Stream"
+  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+  allowfullscreen>
+</iframe>
 
 
-    <!-- Error -->
-    <div id="stream-error">
-      Stream tidak dapat diputar.
-    </div>
+<!-- Overlay klik pertama -->
+<div
+  id="ad-overlay"
+  role="button"
+  aria-label="Lanjutkan ke video"
+></div>
 
-
-    <!-- Overlay klik pertama -->
-    <div
-      id="ad-overlay"
-      role="button"
-      aria-label="Lanjutkan ke video"
-    ></div>
-
-  </main>
-
-
-  <script>
+  </main>  <script>
 
     /* =========================
        DAFTAR STREAM
@@ -394,7 +340,7 @@
 
       "liga1": {
         title: "Liga 1",
-        src: "https://live1.dyrur1.com/live/73576618_169bc615f1b262f8ec0017efa65425fd_1080p.m3u8?auth_key=1789217014-0-0-f13a16db08eafab219f09e67d5ef9d46"
+        src: "https://live2.domainkqt.cc/live/channel4.m3u8"
       },
 
       "sp": {
@@ -446,9 +392,6 @@
     const iframe =
       document.getElementById("video-iframe");
 
-    const errorBox =
-      document.getElementById("stream-error");
-
 
     /* =========================
        JUDUL
@@ -498,7 +441,6 @@
     function loadStream(url) {
 
       if (!url) {
-        errorBox.style.display = "flex";
         return;
       }
 
@@ -515,9 +457,9 @@
         video.style.display = "block";
         iframe.style.display = "none";
 
+
         /*
-         * Browser yang support HLS
-         * secara native.
+         * HLS native
          */
 
         if (
@@ -528,19 +470,12 @@
 
           video.src = url;
 
-          video.addEventListener(
-            "error",
-            showError,
-            { once: true }
-          );
-
           return;
         }
 
 
         /*
-         * Browser seperti Chrome Android
-         * menggunakan HLS.js.
+         * HLS.js
          */
 
         if (
@@ -554,36 +489,10 @@
           });
 
           hls.loadSource(url);
-
           hls.attachMedia(video);
-
-          hls.on(
-            Hls.Events.ERROR,
-            function (
-              event,
-              data
-            ) {
-
-              if (
-                data.fatal
-              ) {
-
-                console.error(
-                  "HLS Error:",
-                  data
-                );
-
-                showError();
-              }
-
-            }
-          );
 
           return;
         }
-
-
-        showError();
 
         return;
       }
@@ -599,12 +508,6 @@
         iframe.style.display = "none";
 
         video.src = url;
-
-        video.addEventListener(
-          "error",
-          showError,
-          { once: true }
-        );
 
         return;
       }
@@ -622,15 +525,6 @@
 
 
     /* =========================
-       ERROR
-       ========================= */
-
-    function showError() {
-      errorBox.style.display = "flex";
-    }
-
-
-    /* =========================
        MULAI STREAM
        ========================= */
 
@@ -640,7 +534,7 @@
 
 
     /* =========================
-       IKLAN SHOPEE
+       IKLAN
        ========================= */
 
     const overlay =
@@ -665,23 +559,12 @@
         adOpened = true;
 
 
-        /*
-         * Dibuka melalui aksi klik
-         * langsung dari user.
-         */
-
         window.open(
           SHOPEE_URL,
           "_blank",
           "noopener,noreferrer"
         );
 
-
-        /*
-         * Setelah klik pertama,
-         * overlay dihilangkan agar
-         * video bisa digunakan.
-         */
 
         overlay.classList.add(
           "hidden"
@@ -693,7 +576,5 @@
       }
     );
 
-  </script>
-
-</body>
+  </script></body>
 </html>
