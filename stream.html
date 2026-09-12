@@ -1,581 +1,866 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title id="page-title">Sports77HD - Live Stream</title>  <!-- HLS.js untuk memutar .m3u8 -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports77HD - Live Stream</title>
 
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
-      background: #000;
-    }
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-    body {
-      overflow-x: hidden;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* =========================
-       WHATSAPP BANNER
-       ========================= */
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+}
 
-    .wa-banner {
-      width: 100%;
-      height: 58px;
+body {
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
 
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 10px;
+/* =========================
+   WHATSAPP BANNER
+   ========================= */
 
-      background: linear-gradient(
-        90deg,
-        #075e25,
-        #16a34a
-      );
+.wa-banner {
+  width: 100%;
+  height: 58px;
 
-      color: #fff;
-      text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
 
-      overflow: hidden;
-    }
+  background: linear-gradient(90deg, #075e25, #16a34a);
 
-    .wa-icon {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
+  color: #fff;
+  text-decoration: none;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  overflow: hidden;
+}
 
-      background: #fff;
-      border-radius: 50%;
+.wa-icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
 
-      font-size: 21px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .wa-content {
-      flex: 1;
-      min-width: 0;
+  background: #fff;
+  border-radius: 50%;
 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+  font-size: 21px;
+}
 
-    .wa-title {
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 16px;
+.wa-content {
+  flex: 1;
+  min-width: 0;
 
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .wa-title span {
-      color: #6dff91;
-    }
+.wa-title {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 16px;
 
-    .wa-subtitle {
-      margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-      font-size: 9px;
-      line-height: 12px;
+.wa-title span {
+  color: #6dff91;
+}
 
-      opacity: .9;
+.wa-subtitle {
+  margin-top: 2px;
 
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  font-size: 9px;
+  line-height: 12px;
 
-    .wa-join {
-      flex-shrink: 0;
+  opacity: .9;
 
-      padding: 7px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-      background: #fff;
-      color: #128c3a;
+.wa-join {
+  flex-shrink: 0;
 
-      border-radius: 18px;
+  padding: 7px 12px;
 
-      font-size: 10px;
-      font-weight: 800;
-    }
+  background: #fff;
+  color: #128c3a;
 
-    /* =========================
-       STREAM BOX
-       ========================= */
+  border-radius: 18px;
 
-    .stream-box {
-      position: relative;
+  font-size: 10px;
+  font-weight: 800;
+}
 
-      width: 100%;
-      height: calc(100vh - 58px);
+/* =========================
+   STREAM BOX
+   ========================= */
 
-      min-height: 300px;
+.stream-box {
+  position: relative;
 
-      background: #000;
+  width: 100%;
+  height: calc(100vh - 58px);
+  min-height: 300px;
 
-      overflow: hidden;
-    }
+  background: #000;
+  overflow: hidden;
+}
 
-    /* =========================
-       VIDEO PLAYER
-       ========================= */
+/* =========================
+   VIDEO PLAYER
+   ========================= */
 
-    #video-player {
-      display: none;
+#video-player {
+  display: none;
 
-      width: 100%;
-      height: 100%;
+  width: 100%;
+  height: 100%;
 
-      background: #000;
+  background: #000;
 
-      object-fit: contain;
-    }
+  object-fit: contain;
+}
 
-    /* =========================
-       IFRAME PLAYER
-       ========================= */
+/* =========================
+   IFRAME PLAYER
+   ========================= */
 
-    #video-iframe {
-      display: none;
+#video-iframe {
+  display: none;
 
-      width: 100%;
-      height: 100%;
+  width: 100%;
+  height: 100%;
 
-      border: 0;
+  border: 0;
+  background: #000;
 
-      background: #000;
+  touch-action: auto;
+}
 
-      touch-action: auto;
-    }
+/* =========================
+   LOADING
+   ========================= */
 
-    /* =========================
-       IKLAN / SENTUH PERTAMA
-       ========================= */
+#loading {
+  position: absolute;
+  inset: 0;
 
-    #ad-overlay {
-      position: absolute;
+  z-index: 5;
 
-      inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      z-index: 10;
+  background: #000;
+  color: #fff;
 
-      background: transparent;
+  font-size: 14px;
+}
 
-      cursor: pointer;
+#loading.hidden {
+  display: none;
+}
 
-      -webkit-tap-highlight-color: transparent;
-    }
+/* =========================
+   ERROR
+   ========================= */
 
-    #ad-overlay.hidden {
-      display: none;
-    }
+#error-box {
+  position: absolute;
+  inset: 0;
 
-    /* =========================
-       MOBILE
-       ========================= */
+  z-index: 6;
 
-    @media (max-width: 480px) {
+  display: none;
 
-      .wa-banner {
-        height: 58px;
-        padding: 7px 9px;
-        gap: 8px;
-      }
+  align-items: center;
+  justify-content: center;
 
-      .wa-icon {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
+  flex-direction: column;
 
-        font-size: 19px;
-      }
+  padding: 25px;
 
-      .wa-title {
-        font-size: 12px;
-      }
+  background: #000;
+  color: #fff;
 
-      .wa-subtitle {
-        font-size: 8px;
-      }
+  text-align: center;
+}
 
-      .wa-join {
-        padding: 7px 10px;
-        font-size: 9px;
-      }
-    }
-  </style></head><body>  <!-- =========================
-       WHATSAPP
-       ========================= --><a
+#error-box.show {
+  display: flex;
+}
+
+#error-box strong {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+#error-box span {
+  max-width: 500px;
+  color: #aaa;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* =========================
+   IKLAN / SENTUH PERTAMA
+   ========================= */
+
+#ad-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+#ad-overlay.hidden {
+  display: none;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+  .wa-banner {
+    height: 58px;
+    padding: 7px 9px;
+    gap: 8px;
+  }
+
+  .wa-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    font-size: 19px;
+  }
+
+  .wa-title {
+    font-size: 12px;
+  }
+
+  .wa-subtitle {
+    font-size: 8px;
+  }
+
+  .wa-join {
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     WHATSAPP
+     ========================= -->
+
+<a
 href="https://whatsapp.com/channel/0029VbD5rXAJ93wYhP08tc3D"
 target="_blank"
 rel="noopener noreferrer"
 class="wa-banner"
 
-«»
+>
 
-<div class="wa-icon">
-  💬
-</div>
-
-<div class="wa-content">
-
-  <div class="wa-title">
-    Join Saluran
-    <span>sports77</span>
+  <div class="wa-icon">
+    💬
   </div>
 
-  <div class="wa-subtitle">
-    Dapatkan update link streaming,
-    jadwal bola & info terbaru!
+  <div class="wa-content">
+
+```
+<div class="wa-title">
+  Join Saluran <span>sports77</span>
+</div>
+
+<div class="wa-subtitle">
+  Dapatkan update link streaming, jadwal bola & info terbaru!
+</div>
+```
+
   </div>
 
-</div>
+  <div class="wa-join">
+    JOIN
+  </div>
 
-<div class="wa-join">
-  JOIN
-</div>
+</a>
 
-  </a>  <!-- =========================
-       STREAM
-       ========================= -->  <main class="stream-box"><!-- Player MP4 / M3U8 -->
+<!-- =========================
+     STREAM
+     ========================= -->
+
+<main class="stream-box">
+
+  <!-- Loading -->
+
+  <div id="loading">
+    Memuat siaran...
+  </div>
+
+  <!-- Error -->
+
+  <div id="error-box">
+    <strong>Siaran tidak dapat dimuat</strong>
+    <span id="error-message">
+      Silakan coba kembali beberapa saat lagi.
+    </span>
+  </div>
+
+  <!-- VIDEO PLAYER -->
+
 <video
-  id="video-player"
-  controls
-  playsinline
-  webkit-playsinline
-  preload="metadata"
-  controlsList="nodownload"
-></video>
-
-
-<!-- Player IFRAME -->
-<iframe
-  id="video-iframe"
-  src="about:blank"
-  title="Live Stream"
-  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-  allowfullscreen>
-</iframe>
-
-
-<!-- Overlay klik pertama -->
-<div
-  id="ad-overlay"
-  role="button"
-  aria-label="Lanjutkan ke video"
-></div>
-
-  </main>  <script>
-
-    /* =========================
-       DAFTAR STREAM
-       ========================= */
-
-    const matches = {
-
-      "uyw": {
-        title: "MOTOGP",
-        src: "https://aceimg.com/upload/?f=2mEaEuQg4.mp4"
-      },
-
-      "dopa": {
-        title: "Dortmund vs Paderborn",
-        src: "https://starballtv010.blogspot.com/2026/09/dopa.html"
-      },
-
-      "frmo": {
-        title: "Freiburg vs M'gladbach",
-        src: "https://starballtv010.blogspot.com/2026/09/frmo.html"
-      },
+id="video-player"
+controls
+playsinline
+webkit-playsinline
+preload="metadata"
+controlsList="nodownload"
+
+> </video>
+
+  <!-- IFRAME PLAYER -->
+
+  <iframe
+    id="video-iframe"
+    src="about:blank"
+    title="Live Stream"
+    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+
+  <!-- Overlay klik pertama -->
+
+  <div
+    id="ad-overlay"
+    role="button"
+    aria-label="Lanjutkan ke video"
+  ></div>
+
+</main>
+
+<script>
+
+/* =========================
+   DAFTAR STREAM
+   ========================= */
+
+const matches = {
+
+  "uyw": {
+    title: "MOTOGP",
+    src: "https://aceimg.com/upload/?f=2mEaEuQg4.mp4"
+  },
 
-      "asno": {
-        title: "Aston Villa vs Nottingham",
-        src: "https://starballtv010.blogspot.com/2026/09/asno.html"
-      },
+  "dopa": {
+    title: "Dortmund vs Paderborn",
+    src: "https://starballtv010.blogspot.com/2026/09/dopa.html"
+  },
 
-      "chhu": {
-        title: "Chelsea vs Hull City",
-        src: "https://starballtv010.blogspot.com/2026/09/chhu.html"
-      },
+  "frmo": {
+    title: "Freiburg vs M'gladbach",
+    src: "https://starballtv010.blogspot.com/2026/09/frmo.html"
+  },
 
-      "lifu": {
-        title: "Liverpool vs Fulham",
-        src: "https://starballtv010.blogspot.com/2026/09/lifu.html"
-      },
+  "asno": {
+    title: "Aston Villa vs Nottingham",
+    src: "https://starballtv010.blogspot.com/2026/09/asno.html"
+  },
 
-      "toev": {
-        title: "Tottenham vs Everton",
-        src: "https://starballtv010.blogspot.com/2026/09/toev.html"
-      },
+  "chhu": {
+    title: "Chelsea vs Hull City",
+    src: "https://starballtv010.blogspot.com/2026/09/chhu.html"
+  },
 
-      "siaj": {
-        title: "Fortuna Sittard vs Ajax",
-        src: "https://starballtv010.blogspot.com/2026/09/siaj.html
-"
-      },
+  "lifu": {
+    title: "Liverpool vs Fulham",
+    src: "https://starballtv010.blogspot.com/2026/09/lifu.html"
+  },
 
-      "suar": {
-        title: "Sunderland vs Arsenal",
-        src: "https://starballtv010.blogspot.com/2026/09/suar.html"
-      },
+  "toev": {
+    title: "Tottenham vs Everton",
+    src: "https://starballtv010.blogspot.com/2026/09/toev.html"
+  },
 
-      "mara": {
-        title: "Real Madrid vs Rayo Vallecano",
-        src: "https://starballtv010.blogspot.com/2026/09/mara.html"
-      },
+  "siaj": {
+    title: "Fortuna Sittard vs Ajax",
+    src: "https://starballtv010.blogspot.com/2026/09/siaj.html"
+  },
 
-      "mina": {
-        title: "Inter Miami vs Nashville",
-        src: "https://starballtv010.blogspot.com/2026/09/mina.html"
-      },
+  "suar": {
+    title: "Sunderland vs Arsenal",
+    src: "https://starballtv010.blogspot.com/2026/09/suar.html"
+  },
 
-      "khna": {
-        title: "Al khaleej vs Al Nassr",
-        src: "https://starballtv010.blogspot.com/2026/09/khna.html"
-      },
+  "mara": {
+    title: "Real Madrid vs Rayo Vallecano",
+    src: "https://starballtv010.blogspot.com/2026/09/mara.html"
+  },
 
-      "sp": {
-        title: "Celta vs Athletic Bilbao",
-        src: "https://aceimg.com/upload/?f=jQ4piDo7n.mp4"
-      }
+  "mina": {
+    title: "Inter Miami vs Nashville",
+    src: "https://starballtv010.blogspot.com/2026/09/mina.html"
+  },
 
-    };
+  "khna": {
+    title: "Al Khaleej vs Al Nassr",
+    src: "https://starballtv010.blogspot.com/2026/09/khna.html"
+  },
 
+  "sp": {
+    title: "Celta vs Athletic Bilbao",
+    src: "https://aceimg.com/upload/?f=jQ4piDo7n.mp4"
+  }
 
-    /* =========================
-       AMBIL ?id=
-       ========================= */
+};
 
-    const params =
-      new URLSearchParams(window.location.search);
 
-    const matchId =
-      (params.get("id") || "")
-        .trim()
-        .toLowerCase();
+/* =========================
+   AMBIL ?id=
+   ========================= */
 
+const params = new URLSearchParams(
+  window.location.search
+);
 
-    /* =========================
-       FALLBACK
-       ========================= */
+const matchId = (
+  params.get("id") || ""
+)
+  .trim()
+  .toLowerCase();
 
-    const fallbackMatch = {
-      title: "Live Stream",
-      src: ""
-    };
 
+/* =========================
+   ELEMENT
+   ========================= */
 
-    /* =========================
-       STREAM AKTIF
-       ========================= */
+const video =
+  document.getElementById("video-player");
 
-    const activeMatch =
-      matches[matchId] || fallbackMatch;
+const iframe =
+  document.getElementById("video-iframe");
 
+const loading =
+  document.getElementById("loading");
 
-    /* =========================
-       ELEMENT
-       ========================= */
+const errorBox =
+  document.getElementById("error-box");
 
-    const video =
-      document.getElementById("video-player");
+const errorMessage =
+  document.getElementById("error-message");
 
-    const iframe =
-      document.getElementById("video-iframe");
 
+/* =========================
+   STREAM AKTIF
+   ========================= */
 
-    /* =========================
-       JUDUL
-       ========================= */
+const activeMatch = matches[matchId];
 
-    document.title =
-      "Sports77HD - " + activeMatch.title;
 
-    document.getElementById("page-title")
-      .textContent =
-      "Sports77HD - " + activeMatch.title;
+/* =========================
+   JUDUL
+   ========================= */
 
+if (activeMatch) {
 
-    /* =========================
-       DETEKSI TIPE STREAM
-       ========================= */
+  document.title =
+    "Sports77HD - " + activeMatch.title;
 
-    function getStreamType(url) {
+} else {
 
-      const cleanUrl =
-        url.split("?")[0].toLowerCase();
+  document.title =
+    "Sports77HD - Live Stream";
 
-      if (
-        cleanUrl.endsWith(".m3u8")
-      ) {
-        return "m3u8";
-      }
+}
 
-      if (
-        cleanUrl.endsWith(".mp4") ||
-        cleanUrl.endsWith(".webm") ||
-        cleanUrl.endsWith(".ogg")
-      ) {
-        return "video";
-      }
 
-      return "iframe";
-    }
+/* =========================
+   ERROR
+   ========================= */
 
+function showError(message) {
 
-    /* =========================
-       LOAD STREAM
-       ========================= */
+  loading.classList.add("hidden");
 
-    let hls = null;
+  errorMessage.textContent =
+    message;
 
-    function loadStream(url) {
+  errorBox.classList.add("show");
+}
 
-      if (!url) {
-        return;
-      }
 
-      const type =
-        getStreamType(url);
+/* =========================
+   LOADING
+   ========================= */
 
+function hideLoading() {
+  loading.classList.add("hidden");
+}
 
-      /* =====================
-         M3U8 / HLS
-         ===================== */
 
-      if (type === "m3u8") {
+/* =========================
+   DETEKSI TIPE STREAM
+   ========================= */
 
-        video.style.display = "block";
-        iframe.style.display = "none";
+function getStreamType(url) {
 
+  if (!url) {
+    return null;
+  }
 
-        /*
-         * HLS native
-         */
+  const cleanUrl =
+    url.split("?")[0].toLowerCase();
 
-        if (
-          video.canPlayType(
-            "application/vnd.apple.mpegurl"
-          )
-        ) {
+  if (
+    cleanUrl.endsWith(".m3u8")
+  ) {
+    return "m3u8";
+  }
 
-          video.src = url;
+  if (
+    cleanUrl.endsWith(".mp4") ||
+    cleanUrl.endsWith(".webm") ||
+    cleanUrl.endsWith(".ogg")
+  ) {
+    return "video";
+  }
 
-          return;
-        }
+  return "iframe";
+}
 
 
-        /*
-         * HLS.js
-         */
+/* =========================
+   HLS
+   ========================= */
 
-        if (
-          window.Hls &&
-          Hls.isSupported()
-        ) {
+let hls = null;
 
-          hls = new Hls({
-            enableWorker: true,
-            lowLatencyMode: true
-          });
 
-          hls.loadSource(url);
-          hls.attachMedia(video);
+/* =========================
+   LOAD STREAM
+   ========================= */
 
-          return;
-        }
+function loadStream(url) {
 
-        return;
-      }
+  if (!url) {
 
-
-      /* =====================
-         MP4 / VIDEO
-         ===================== */
-
-      if (type === "video") {
-
-        video.style.display = "block";
-        iframe.style.display = "none";
-
-        video.src = url;
-
-        return;
-      }
-
-
-      /* =====================
-         IFRAME
-         ===================== */
-
-      iframe.style.display = "block";
-      video.style.display = "none";
-
-      iframe.src = url;
-    }
-
-
-    /* =========================
-       MULAI STREAM
-       ========================= */
-
-    loadStream(
-      activeMatch.src
+    showError(
+      "ID siaran tidak ditemukan. Pastikan URL menggunakan ?id=nama."
     );
 
+    return;
+  }
 
-    /* =========================
-       IKLAN
-       ========================= */
 
-    const overlay =
-      document.getElementById(
-        "ad-overlay"
+  const type =
+    getStreamType(url);
+
+
+  /* =====================
+     M3U8 / HLS
+     ===================== */
+
+  if (type === "m3u8") {
+
+    video.style.display = "block";
+    iframe.style.display = "none";
+
+
+    /* HLS native */
+
+    if (
+      video.canPlayType(
+        "application/vnd.apple.mpegurl"
+      )
+    ) {
+
+      video.src = url;
+
+      video.addEventListener(
+        "loadedmetadata",
+        hideLoading,
+        { once: true }
       );
 
-    const SHOPEE_URL =
-      "https://goeco.mobi/GZVZEaC3";
+      video.addEventListener(
+        "error",
+        function () {
+          showError(
+            "HLS tidak dapat diputar di browser ini."
+          );
+        },
+        { once: true }
+      );
 
-    let adOpened = false;
+      return;
+    }
 
 
-    overlay.addEventListener(
-      "click",
+    /* HLS.js */
+
+    if (
+      window.Hls &&
+      Hls.isSupported()
+    ) {
+
+      hls = new Hls({
+
+        enableWorker: true,
+
+        lowLatencyMode: true,
+
+        backBufferLength: 30
+
+      });
+
+
+      hls.loadSource(url);
+
+      hls.attachMedia(video);
+
+
+      hls.on(
+        Hls.Events.MANIFEST_PARSED,
+        function () {
+
+          hideLoading();
+
+        }
+      );
+
+
+      hls.on(
+        Hls.Events.ERROR,
+        function (
+          event,
+          data
+        ) {
+
+          console.error(
+            "HLS Error:",
+            data
+          );
+
+
+          if (
+            data.fatal
+          ) {
+
+            if (
+              data.type ===
+              Hls.ErrorTypes.NETWORK_ERROR
+            ) {
+
+              showError(
+                "Gagal mengambil siaran. Server stream mungkin sedang offline atau memblokir akses browser."
+              );
+
+            } else {
+
+              showError(
+                "Terjadi error saat memuat video."
+              );
+
+            }
+
+          }
+
+        }
+      );
+
+      return;
+    }
+
+
+    showError(
+      "Browser tidak mendukung HLS."
+    );
+
+    return;
+  }
+
+
+  /* =====================
+     MP4 / VIDEO
+     ===================== */
+
+  if (type === "video") {
+
+    video.style.display = "block";
+    iframe.style.display = "none";
+
+    video.src = url;
+
+    video.addEventListener(
+      "loadedmetadata",
+      hideLoading,
+      { once: true }
+    );
+
+    video.addEventListener(
+      "error",
       function () {
 
-        if (adOpened) {
-          return;
-        }
-
-        adOpened = true;
-
-
-        window.open(
-          SHOPEE_URL,
-          "_blank",
-          "noopener,noreferrer"
-        );
-
-
-        overlay.classList.add(
-          "hidden"
+        showError(
+          "File video tidak dapat diputar."
         );
 
       },
-      {
-        once: true
-      }
+      { once: true }
     );
 
-  </script></body>
+    return;
+  }
+
+
+  /* =====================
+     IFRAME
+     ===================== */
+
+  iframe.style.display = "block";
+  video.style.display = "none";
+
+  iframe.src = url;
+
+  iframe.addEventListener(
+    "load",
+    function () {
+
+      hideLoading();
+
+    },
+    { once: true }
+  );
+
+}
+
+
+/* =========================
+   CEK ID
+   ========================= */
+
+if (!matchId) {
+
+  showError(
+    "Belum ada ID pertandingan. Contoh: ?id=dopa"
+  );
+
+} else if (!activeMatch) {
+
+  showError(
+    "ID '" +
+    matchId +
+    "' tidak tersedia di daftar stream."
+  );
+
+} else {
+
+  loadStream(
+    activeMatch.src
+  );
+
+}
+
+
+/* =========================
+   IKLAN
+   ========================= */
+
+const overlay =
+  document.getElementById(
+    "ad-overlay"
+  );
+
+const SHOPEE_URL =
+  "https://goeco.mobi/GZVZEaC3";
+
+let adOpened = false;
+
+
+overlay.addEventListener(
+  "click",
+  function () {
+
+    if (adOpened) {
+      return;
+    }
+
+    adOpened = true;
+
+
+    window.open(
+      SHOPEE_URL,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+
+    overlay.classList.add(
+      "hidden"
+    );
+
+  },
+  {
+    once: true
+  }
+);
+
+
+/* =========================
+   CLEANUP
+   ========================= */
+
+window.addEventListener(
+  "beforeunload",
+  function () {
+
+    if (hls) {
+
+      hls.destroy();
+
+      hls = null;
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
 </html>
