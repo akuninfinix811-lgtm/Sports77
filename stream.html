@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- PENTING: Mencegah browser mengirimkan domain Vercel Anda ke server stream -->
+<meta name="referrer" content="no-referrer">
 <title>Sports77HD - Live Stream</title>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -293,7 +294,6 @@ href="https://whatsapp.com/channel/0029VbD5rXAJ93wYhP08tc3D"
 target="_blank"
 rel="noopener noreferrer"
 class="wa-banner"
-
 >
 
   <div class="wa-icon">
@@ -301,17 +301,13 @@ class="wa-banner"
   </div>
 
   <div class="wa-content">
+    <div class="wa-title">
+      Join Saluran <span>sports77</span>
+    </div>
 
-```
-<div class="wa-title">
-  Join Saluran <span>sports77</span>
-</div>
-
-<div class="wa-subtitle">
-  Dapatkan update link streaming, jadwal bola & info terbaru!
-</div>
-```
-
+    <div class="wa-subtitle">
+      Dapatkan update link streaming, jadwal bola & info terbaru!
+    </div>
   </div>
 
   <div class="wa-join">
@@ -343,15 +339,15 @@ class="wa-banner"
 
   <!-- VIDEO PLAYER -->
 
-<video
-id="video-player"
-controls
-playsinline
-webkit-playsinline
-preload="metadata"
-controlsList="nodownload"
-
-> </video>
+  <video
+    id="video-player"
+    controls
+    playsinline
+    webkit-playsinline
+    preload="metadata"
+    controlsList="nodownload"
+    crossorigin="anonymous"
+  > </video>
 
   <!-- IFRAME PLAYER -->
 
@@ -361,7 +357,7 @@ controlsList="nodownload"
     title="Live Stream"
     allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
     allowfullscreen
-    referrerpolicy="no-referrer-when-downgrade"
+    referrerpolicy="no-referrer"
   ></iframe>
 
   <!-- Overlay klik pertama -->
@@ -384,6 +380,7 @@ const matches = {
 
   "powa": {
     title: "muun",
+    // Catatan: Pastikan token txSecret/txTime selalu diperbarui dari penyedia siaran jika link sudah mati
     src: "https://liveplay1.camel4.live/live/27551_12568346_23xmvkh6j4p8qg8.m3u8?txSecret=ad75ae770e32ba554e734907821f988d&txTime=6AB645AA&lat=9000&auth=4f84f8d149e4058a52045e7ade579502"
   },
 
@@ -507,15 +504,9 @@ const activeMatch = matches[matchId];
    ========================= */
 
 if (activeMatch) {
-
-  document.title =
-    "Sports77HD - " + activeMatch.title;
-
+  document.title = "Sports77HD - " + activeMatch.title;
 } else {
-
-  document.title =
-    "Sports77HD - Live Stream";
-
+  document.title = "Sports77HD - Live Stream";
 }
 
 
@@ -524,12 +515,8 @@ if (activeMatch) {
    ========================= */
 
 function showError(message) {
-
   loading.classList.add("hidden");
-
-  errorMessage.textContent =
-    message;
-
+  errorMessage.textContent = message;
   errorBox.classList.add("show");
 }
 
@@ -548,17 +535,11 @@ function hideLoading() {
    ========================= */
 
 function getStreamType(url) {
+  if (!url) return null;
 
-  if (!url) {
-    return null;
-  }
+  const cleanUrl = url.split("?")[0].toLowerCase();
 
-  const cleanUrl =
-    url.split("?")[0].toLowerCase();
-
-  if (
-    cleanUrl.endsWith(".m3u8")
-  ) {
+  if (cleanUrl.endsWith(".m3u8")) {
     return "m3u8";
   }
 
@@ -588,17 +569,11 @@ let hls = null;
 function loadStream(url) {
 
   if (!url) {
-
-    showError(
-      "ID siaran tidak ditemukan. Pastikan URL menggunakan ?id=nama."
-    );
-
+    showError("ID siaran tidak ditemukan. Pastikan URL menggunakan ?id=nama.");
     return;
   }
 
-
-  const type =
-    getStreamType(url);
+  const type = getStreamType(url);
 
 
   /* =====================
@@ -611,148 +586,75 @@ function loadStream(url) {
     iframe.style.display = "none";
 
 
-    /* HLS native */
+    /* HLS native (Safari/iOS) */
 
-    if (
-      video.canPlayType(
-        "application/vnd.apple.mpegurl"
-      )
-    ) {
-
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
 
-      video.addEventListener(
-        "loadedmetadata",
-        hideLoading,
-        { once: true }
-      );
+      video.addEventListener("loadedmetadata", hideLoading, { once: true });
 
-      video.addEventListener(
-        "error",
-        function () {
-          showError(
-            "HLS tidak dapat diputar di browser ini."
-          );
-        },
-        { once: true }
-      );
+      video.addEventListener("error", function () {
+        showError("HLS tidak dapat diputar di browser ini.");
+      }, { once: true });
 
       return;
     }
 
 
-    /* HLS.js */
+    /* HLS.js (Chrome, Firefox, Android) */
 
-    if (
-      window.Hls &&
-      Hls.isSupported()
-    ) {
+    if (window.Hls && Hls.isSupported()) {
 
       hls = new Hls({
-
         enableWorker: true,
-
         lowLatencyMode: true,
-
-        backBufferLength: 30
-
+        backBufferLength: 30,
+        // DITAMBAHKAN: Konfigurasi XHR untuk menyembunyikan kredensial CORS
+        xhrSetup: function (xhr, url) {
+          xhr.withCredentials = false;
+        }
       });
 
-
       hls.loadSource(url);
-
       hls.attachMedia(video);
 
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        hideLoading();
+      });
 
-      hls.on(
-        Hls.Events.MANIFEST_PARSED,
-        function () {
+      hls.on(Hls.Events.ERROR, function (event, data) {
+        console.error("HLS Error:", data);
 
-          hideLoading();
-
-        }
-      );
-
-
-      hls.on(
-        Hls.Events.ERROR,
-        function (
-          event,
-          data
-        ) {
-
-          console.error(
-            "HLS Error:",
-            data
-          );
-
-
-          if (
-            data.fatal
-          ) {
-
-            if (
-              data.type ===
-              Hls.ErrorTypes.NETWORK_ERROR
-            ) {
-
-              showError(
-                "Gagal mengambil siaran. Server stream mungkin sedang offline atau memblokir akses browser."
-              );
-
-            } else {
-
-              showError(
-                "Terjadi error saat memuat video."
-              );
-
-            }
-
+        if (data.fatal) {
+          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+            showError("Gagal mengambil siaran. Token m3u8 mungkin sudah kedaluwarsa atau server memblokir domain.");
+          } else {
+            showError("Terjadi error saat memuat video.");
           }
-
         }
-      );
+      });
 
       return;
     }
 
-
-    showError(
-      "Browser tidak mendukung HLS."
-    );
-
+    showError("Browser tidak mendukung HLS.");
     return;
   }
 
 
   /* =====================
      MP4 / VIDEO
-     ===================== */
+     ========================= */
 
   if (type === "video") {
-
     video.style.display = "block";
     iframe.style.display = "none";
 
     video.src = url;
-
-    video.addEventListener(
-      "loadedmetadata",
-      hideLoading,
-      { once: true }
-    );
-
-    video.addEventListener(
-      "error",
-      function () {
-
-        showError(
-          "File video tidak dapat diputar."
-        );
-
-      },
-      { once: true }
-    );
+    video.addEventListener("loadedmetadata", hideLoading, { once: true });
+    video.addEventListener("error", function () {
+      showError("File video tidak dapat diputar.");
+    }, { once: true });
 
     return;
   }
@@ -767,15 +669,9 @@ function loadStream(url) {
 
   iframe.src = url;
 
-  iframe.addEventListener(
-    "load",
-    function () {
-
-      hideLoading();
-
-    },
-    { once: true }
-  );
+  iframe.addEventListener("load", function () {
+    hideLoading();
+  }, { once: true });
 
 }
 
@@ -785,25 +681,11 @@ function loadStream(url) {
    ========================= */
 
 if (!matchId) {
-
-  showError(
-    "Belum ada ID pertandingan. Contoh: ?id=dopa"
-  );
-
+  showError("Belum ada ID pertandingan. Contoh: ?id=powa");
 } else if (!activeMatch) {
-
-  showError(
-    "ID '" +
-    matchId +
-    "' tidak tersedia di daftar stream."
-  );
-
+  showError("ID '" + matchId + "' tidak tersedia di daftar stream.");
 } else {
-
-  loadStream(
-    activeMatch.src
-  );
-
+  loadStream(activeMatch.src);
 }
 
 
@@ -811,64 +693,29 @@ if (!matchId) {
    IKLAN
    ========================= */
 
-const overlay =
-  document.getElementById(
-    "ad-overlay"
-  );
-
-const SHOPEE_URL =
-  "https://goeco.mobi/GZVZEaC3";
-
+const overlay = document.getElementById("ad-overlay");
+const SHOPEE_URL = "https://goeco.mobi/GZVZEaC3";
 let adOpened = false;
 
+overlay.addEventListener("click", function () {
+  if (adOpened) return;
+  adOpened = true;
 
-overlay.addEventListener(
-  "click",
-  function () {
-
-    if (adOpened) {
-      return;
-    }
-
-    adOpened = true;
-
-
-    window.open(
-      SHOPEE_URL,
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-
-    overlay.classList.add(
-      "hidden"
-    );
-
-  },
-  {
-    once: true
-  }
-);
+  window.open(SHOPEE_URL, "_blank", "noopener,noreferrer");
+  overlay.classList.add("hidden");
+}, { once: true });
 
 
 /* =========================
    CLEANUP
    ========================= */
 
-window.addEventListener(
-  "beforeunload",
-  function () {
-
-    if (hls) {
-
-      hls.destroy();
-
-      hls = null;
-
-    }
-
+window.addEventListener("beforeunload", function () {
+  if (hls) {
+    hls.destroy();
+    hls = null;
   }
-);
+});
 
 </script>
 
