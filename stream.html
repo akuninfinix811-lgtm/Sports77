@@ -349,14 +349,16 @@ class="wa-banner"
     crossorigin="anonymous"
   > </video>
 
-  <!-- IFRAME PLAYER -->
+  <!-- IFRAME PLAYER (Atribut Fullscreen Lengkap) -->
 
   <iframe
     id="video-iframe"
     src="about:blank"
     title="Live Stream"
-    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-    allowfullscreen
+    allow="autoplay; encrypted-media; picture-in-picture; fullscreen; display-capture"
+    allowfullscreen="true"
+    webkitallowfullscreen="true"
+    mozallowfullscreen="true"
     referrerpolicy="no-referrer"
   ></iframe>
 
@@ -380,7 +382,6 @@ const matches = {
 
   "powa": {
     title: "muun",
-    // Catatan: Pastikan token txSecret/txTime selalu diperbarui dari penyedia siaran jika link sudah mati
     src: "https://liveplay1.camel4.live/live/27551_12568346_23xmvkh6j4p8qg8.m3u8?txSecret=ad75ae770e32ba554e734907821f988d&txTime=6AB645AA&lat=9000&auth=4f84f8d149e4058a52045e7ade579502"
   },
 
@@ -609,7 +610,6 @@ function loadStream(url) {
         enableWorker: true,
         lowLatencyMode: true,
         backBufferLength: 30,
-        // DITAMBAHKAN: Konfigurasi XHR untuk menyembunyikan kredensial CORS
         xhrSetup: function (xhr, url) {
           xhr.withCredentials = false;
         }
