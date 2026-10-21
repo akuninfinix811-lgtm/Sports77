@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- PENTING: Mencegah browser mengirimkan domain Vercel Anda ke server stream -->
 <meta name="referrer" content="no-referrer">
 <title>Sports77HD - Live Stream</title>
 
@@ -15,10 +16,14 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background: #000;
+}
+
+body {
   overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
@@ -30,13 +35,17 @@ html, body {
 .wa-banner {
   width: 100%;
   height: 58px;
+
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 7px 10px;
+
   background: linear-gradient(90deg, #075e25, #16a34a);
+
   color: #fff;
   text-decoration: none;
+
   overflow: hidden;
 }
 
@@ -44,17 +53,21 @@ html, body {
   width: 38px;
   height: 38px;
   min-width: 38px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: #fff;
   border-radius: 50%;
+
   font-size: 21px;
 }
 
 .wa-content {
   flex: 1;
   min-width: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,6 +77,7 @@ html, body {
   font-size: 13px;
   font-weight: 800;
   line-height: 16px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -75,9 +89,12 @@ html, body {
 
 .wa-subtitle {
   margin-top: 2px;
+
   font-size: 9px;
   line-height: 12px;
+
   opacity: .9;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,10 +102,14 @@ html, body {
 
 .wa-join {
   flex-shrink: 0;
+
   padding: 7px 12px;
+
   background: #fff;
   color: #128c3a;
+
   border-radius: 18px;
+
   font-size: 10px;
   font-weight: 800;
 }
@@ -99,31 +120,43 @@ html, body {
 
 .stream-box {
   position: relative;
+
   width: 100%;
   height: calc(100vh - 58px);
   min-height: 300px;
+
   background: #000;
   overflow: hidden;
 }
 
 /* =========================
-   PLAYERS
+   VIDEO PLAYER
    ========================= */
 
-#video-player,
-#video-iframe {
+#video-player {
   display: none;
+
   width: 100%;
   height: 100%;
-  border: 0;
-  background: #000;
-}
 
-#video-player {
+  background: #000;
+
   object-fit: contain;
 }
 
+/* =========================
+   IFRAME PLAYER
+   ========================= */
+
 #video-iframe {
+  display: none;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  background: #000;
+
   touch-action: auto;
 }
 
@@ -134,12 +167,16 @@ html, body {
 #loading {
   position: absolute;
   inset: 0;
+
   z-index: 5;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: #000;
   color: #fff;
+
   font-size: 14px;
 }
 
@@ -154,14 +191,21 @@ html, body {
 #error-box {
   position: absolute;
   inset: 0;
+
   z-index: 6;
+
   display: none;
+
   align-items: center;
   justify-content: center;
+
   flex-direction: column;
+
   padding: 25px;
+
   background: #000;
   color: #fff;
+
   text-align: center;
 }
 
@@ -188,16 +232,55 @@ html, body {
 #ad-overlay {
   position: absolute;
   inset: 0;
+
   z-index: 10;
+
   background: transparent;
+
   cursor: pointer;
+
   -webkit-tap-highlight-color: transparent;
 }
 
 #ad-overlay.hidden {
   display: none;
 }
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+  .wa-banner {
+    height: 58px;
+    padding: 7px 9px;
+    gap: 8px;
+  }
+
+  .wa-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    font-size: 19px;
+  }
+
+  .wa-title {
+    font-size: 12px;
+  }
+
+  .wa-subtitle {
+    font-size: 8px;
+  }
+
+  .wa-join {
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+}
 </style>
+
 </head>
 
 <body>
@@ -206,13 +289,31 @@ html, body {
      WHATSAPP
      ========================= -->
 
-<a href="https://whatsapp.com/channel/0029VbE0ay50gcfO26fbVg2r" target="_blank" rel="noopener noreferrer" class="wa-banner">
-  <div class="wa-icon">💬</div>
-  <div class="wa-content">
-    <div class="wa-title">Join Saluran <span>sports77</span></div>
-    <div class="wa-subtitle">Dapatkan update link streaming, jadwal bola & info terbaru!</div>
+<a
+href="https://whatsapp.com/channel/0029VbE0ay50gcfO26fbVg2r"
+target="_blank"
+rel="noopener noreferrer"
+class="wa-banner"
+>
+
+  <div class="wa-icon">
+    💬
   </div>
-  <div class="wa-join">JOIN</div>
+
+  <div class="wa-content">
+    <div class="wa-title">
+      Join Saluran <span>sports77</span>
+    </div>
+
+    <div class="wa-subtitle">
+      Dapatkan update link streaming, jadwal bola & info terbaru!
+    </div>
+  </div>
+
+  <div class="wa-join">
+    JOIN
+  </div>
+
 </a>
 
 <!-- =========================
@@ -221,12 +322,22 @@ html, body {
 
 <main class="stream-box">
 
-  <div id="loading">Memuat siaran...</div>
+  <!-- Loading -->
+
+  <div id="loading">
+    Memuat siaran...
+  </div>
+
+  <!-- Error -->
 
   <div id="error-box">
     <strong>Siaran tidak dapat dimuat</strong>
-    <span id="error-message">Silakan coba kembali beberapa saat lagi.</span>
+    <span id="error-message">
+      Silakan coba kembali beberapa saat lagi.
+    </span>
   </div>
+
+  <!-- VIDEO PLAYER -->
 
   <video
     id="video-player"
@@ -236,7 +347,9 @@ html, body {
     preload="metadata"
     controlsList="nodownload"
     crossorigin="anonymous"
-  ></video>
+  > </video>
+
+  <!-- IFRAME PLAYER (Atribut Fullscreen Lengkap) -->
 
   <iframe
     id="video-iframe"
@@ -247,61 +360,164 @@ html, body {
     webkitallowfullscreen="true"
     mozallowfullscreen="true"
     referrerpolicy="no-referrer"
-    sandbox="allow-scripts allow-same-origin allow-presentation"
   ></iframe>
 
-  <div id="ad-overlay" role="button" aria-label="Lanjutkan ke video"></div>
+  <!-- Overlay klik pertama -->
+
+  <div
+    id="ad-overlay"
+    role="button"
+    aria-label="Lanjutkan ke video"
+  ></div>
 
 </main>
 
 <script>
+
 /* =========================
    DAFTAR STREAM
    ========================= */
 
 const matches = {
-  "coma": { title: "muun", src: "https://starballtv012.blogspot.com/2026/10/coma.html" },
-  "liga": { title: "player", src: "https://starballtv012.blogspot.com/2026/10/liga.html" },
-  "marb": { title: "player6", src: "https://starballtv012.blogspot.com/2026/10/marb.html" },
-  "muar": { title: "player 5", src: "https://starballtv012.blogspot.com/2026/10/muar.html" },
-  "insh": { title: "player1", src: "https://starballtv012.blogspot.com/2026/10/insh.html" },
-  "asvi": { title: "player2", src: "https://starballtv012.blogspot.com/2026/10/asvi.html" },
-  "befe": { title: "player3", src: "https://starballtv012.blogspot.com/2026/10/befe.html" },
-  "livi": { title: "player4", src: "https://starballtv012.blogspot.com/2026/10/livi.html" },
-  "mase": { title: "fuma", src: "https://starballtv012.blogspot.com/2026/10/mase.html?m=1" },
-  "beba": { title: "player6", src: "https://starballtv012.blogspot.com/2026/10/beba.html" },
-  "mule": { title: "player 7", src: "https://starballtv012.blogspot.com/2026/10/mule.html" },
-  "libr": { title: "player 7", src: "https://starballtv012.blogspot.com/2026/10/libr.html" },
-  "atin": { title: "player 8", src: "https://starballtv012.blogspot.com/2026/10/atin.html" },
-  "bage": { title: "player 9", src: "https://starballtv012.blogspot.com/2026/10/bage.html?m=1" },
-  "nabo": { title: "player 10", src: "https://starballtv012.blogspot.com/2026/10/nabo.html?m=1" },
-  "hitt": { title: "player 11", src: "https://starballtv012.blogspot.com/2026/10/hitt.html?m=1" },
-  "pevi": { title: "player 11", src: "https://starballtv012.blogspot.com/2026/10/pevi.html?m=1" },
-  "mavil": { title: "player12", src: "https://starballtv012.blogspot.com/2026/10/mavil.html?m=1" }
+
+  "coma": {
+    title: "muun",
+    src: "https://starballtv012.blogspot.com/2026/10/coma.html"
+  },
+
+  "liga": {
+    formula1: "player",
+    src: "https://starballtv012.blogspot.com/2026/10/liga.html"
+  },
+
+  "marb": {
+    title: "player6",
+    src: "https://starballtv012.blogspot.com/2026/10/marb.html"
+  },
+
+  "muar": {
+    title: "player 5",
+    src: "https://starballtv012.blogspot.com/2026/10/muar.html"
+  },
+
+  "insh": {
+    title: "player1",
+    src: "https://starballtv012.blogspot.com/2026/10/insh.html"
+  },
+
+  "asvi": {
+    title: "player2",
+    src: "https://starballtv012.blogspot.com/2026/10/asvi.html"
+  },
+
+  "befe": {
+    title: "player3",
+    src: "https://starballtv012.blogspot.com/2026/10/befe.html"
+  },
+
+  "livi": {
+    title: "player4",
+    src: "https://starballtv012.blogspot.com/2026/10/livi.html"
+  },
+
+  "mase": {
+    title: "fuma",
+    src: "https://starballtv012.blogspot.com/2026/10/mase.html?m=1"
+  },
+
+  "beba": {
+    title: "player6",
+    src: "https://starballtv012.blogspot.com/2026/10/beba.html"
+  },
+
+  "mule": {
+    title: "player 7",
+    src: "https://starballtv012.blogspot.com/2026/10/mule.html"
+  },
+
+  "libr": {
+    title: "player 7",
+    src: "https://starballtv012.blogspot.com/2026/10/libr.html"
+  },
+
+  "atin": {
+    title: "player 8",
+    src: "https://starballtv012.blogspot.com/2026/10/atin.html"
+  },
+  
+  "bage": {
+    title: "player 9",
+    src: "https://starballtv012.blogspot.com/2026/10/bage.html?m=1"
+  },
+  
+    "nabo": {
+    title: "player 10",
+    src: "https://starballtv012.blogspot.com/2026/10/nabo.html?m=1"
+  },
+
+  "hitt": {
+    title: "player 11",
+    src: "https://starballtv012.blogspot.com/2026/10/hitt.html?m=1"
+  },
+
+  "pevi": {
+    title: "player 11",
+    src: "https://starballtv012.blogspot.com/2026/10/pevi.html?m=1"
+  },
+  
+  "mavil": {
+    title: "player12",
+    src: "https://starballtv012.blogspot.com/2026/10/mavil.html?m=1"
+  }
+
 };
+
 
 /* =========================
    AMBIL ?id=
    ========================= */
 
-const params = new URLSearchParams(window.location.search);
-const matchId = (params.get("id") || "").trim().toLowerCase();
+const params = new URLSearchParams(
+  window.location.search
+);
+
+const matchId = (
+  params.get("id") || ""
+)
+  .trim()
+  .toLowerCase();
+
 
 /* =========================
    ELEMENT
    ========================= */
 
-const video = document.getElementById("video-player");
-const iframe = document.getElementById("video-iframe");
-const loading = document.getElementById("loading");
-const errorBox = document.getElementById("error-box");
-const errorMessage = document.getElementById("error-message");
+const video =
+  document.getElementById("video-player");
+
+const iframe =
+  document.getElementById("video-iframe");
+
+const loading =
+  document.getElementById("loading");
+
+const errorBox =
+  document.getElementById("error-box");
+
+const errorMessage =
+  document.getElementById("error-message");
+
 
 /* =========================
-   STREAM AKTIF & JUDUL
+   STREAM AKTIF
    ========================= */
 
 const activeMatch = matches[matchId];
+
+
+/* =========================
+   JUDUL
+   ========================= */
 
 if (activeMatch) {
   document.title = "Sports77HD - " + activeMatch.title;
@@ -309,8 +525,9 @@ if (activeMatch) {
   document.title = "Sports77HD - Live Stream";
 }
 
+
 /* =========================
-   ERROR & LOADING
+   ERROR
    ========================= */
 
 function showError(message) {
@@ -319,58 +536,205 @@ function showError(message) {
   errorBox.classList.add("show");
 }
 
+
+/* =========================
+   LOADING
+   ========================= */
+
 function hideLoading() {
   loading.classList.add("hidden");
 }
+
+
+/* =========================
+   DETEKSI TIPE STREAM
+   ========================= */
+
+function getStreamType(url) {
+  if (!url) return null;
+
+  const cleanUrl = url.split("?")[0].toLowerCase();
+
+  if (cleanUrl.endsWith(".m3u8")) {
+    return "m3u8";
+  }
+
+  if (
+    cleanUrl.endsWith(".mp4") ||
+    cleanUrl.endsWith(".webm") ||
+    cleanUrl.endsWith(".ogg")
+  ) {
+    return "video";
+  }
+
+  return "iframe";
+}
+
+
+/* =========================
+   HLS
+   ========================= */
+
+let hls = null;
+
 
 /* =========================
    LOAD STREAM
    ========================= */
 
 function loadStream(url) {
+
   if (!url) {
-    showError("ID siaran tidak ditemukan.");
+    showError("ID siaran tidak ditemukan. Pastikan URL menggunakan ?id=nama.");
     return;
   }
 
-  // Karena sumber berupa link halaman HTML blogspot, muat menggunakan iframe
+  const type = getStreamType(url);
+
+
+  /* =====================
+     M3U8 / HLS
+     ===================== */
+
+  if (type === "m3u8") {
+
+    video.style.display = "block";
+    iframe.style.display = "none";
+
+
+    /* HLS native (Safari/iOS) */
+
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = url;
+
+      video.addEventListener("loadedmetadata", hideLoading, { once: true });
+
+      video.addEventListener("error", function () {
+        showError("HLS tidak dapat diputar di browser ini.");
+      }, { once: true });
+
+      return;
+    }
+
+
+    /* HLS.js (Chrome, Firefox, Android) */
+
+    if (window.Hls && Hls.isSupported()) {
+
+      hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true,
+        backBufferLength: 30,
+        xhrSetup: function (xhr, url) {
+          xhr.withCredentials = false;
+        }
+      });
+
+      hls.loadSource(url);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        hideLoading();
+      });
+
+      hls.on(Hls.Events.ERROR, function (event, data) {
+        console.error("HLS Error:", data);
+
+        if (data.fatal) {
+          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+            showError("Gagal mengambil siaran. Token m3u8 mungkin sudah kedaluwarsa atau server memblokir domain.");
+          } else {
+            showError("Terjadi error saat memuat video.");
+          }
+        }
+      });
+
+      return;
+    }
+
+    showError("Browser tidak mendukung HLS.");
+    return;
+  }
+
+
+  /* =====================
+     MP4 / VIDEO
+     ========================= */
+
+  if (type === "video") {
+    video.style.display = "block";
+    iframe.style.display = "none";
+
+    video.src = url;
+    video.addEventListener("loadedmetadata", hideLoading, { once: true });
+    video.addEventListener("error", function () {
+      showError("File video tidak dapat diputar.");
+    }, { once: true });
+
+    return;
+  }
+
+
+  /* =====================
+     IFRAME
+     ===================== */
+
   iframe.style.display = "block";
   video.style.display = "none";
+
   iframe.src = url;
 
   iframe.addEventListener("load", function () {
     hideLoading();
   }, { once: true });
+
 }
 
+
 /* =========================
-   VALIDASI ID
+   CEK ID
    ========================= */
 
 if (!matchId) {
-  showError("Belum ada ID pertandingan. Contoh: ?id=coma");
+  showError("Belum ada ID pertandingan. Contoh: ?id=powa");
 } else if (!activeMatch) {
   showError("ID '" + matchId + "' tidak tersedia di daftar stream.");
 } else {
   loadStream(activeMatch.src);
 }
 
+
 /* =========================
-   IKLAN / SENTUH PERTAMA
+   IKLAN
    ========================= */
 
 const overlay = document.getElementById("ad-overlay");
-const TARGET_URL = "https://vt.tokopedia.com/t/ZS9AnMEc8ELsV-4tPMa/";
+const SHOPEE_URL = "https://vt.tokopedia.com/t/ZS9AnMEc8ELsV-4tPMa/";
 let adOpened = false;
 
 overlay.addEventListener("click", function () {
   if (adOpened) return;
   adOpened = true;
 
-  window.open(TARGET_URL, "_blank", "noopener,noreferrer");
+  window.open(SHOPEE_URL, "_blank", "noopener,noreferrer");
   overlay.classList.add("hidden");
 }, { once: true });
+
+
+/* =========================
+   CLEANUP
+   ========================= */
+
+window.addEventListener("beforeunload", function () {
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
+});
+
 </script>
 
 </body>
 </html>
+
+Fix apa yg salah?
