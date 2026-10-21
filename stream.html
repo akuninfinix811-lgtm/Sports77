@@ -23,6 +23,10 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
+/* =========================
+   WHATSAPP BANNER
+   ========================= */
+
 .wa-banner {
   width: 100%;
   height: 58px;
@@ -65,7 +69,9 @@ html, body {
   text-overflow: ellipsis;
 }
 
-.wa-title span { color: #6dff91; }
+.wa-title span {
+  color: #6dff91;
+}
 
 .wa-subtitle {
   margin-top: 2px;
@@ -87,6 +93,10 @@ html, body {
   font-weight: 800;
 }
 
+/* =========================
+   STREAM BOX
+   ========================= */
+
 .stream-box {
   position: relative;
   width: 100%;
@@ -96,7 +106,12 @@ html, body {
   overflow: hidden;
 }
 
-#video-player, #video-iframe {
+/* =========================
+   PLAYERS
+   ========================= */
+
+#video-player,
+#video-iframe {
   display: none;
   width: 100%;
   height: 100%;
@@ -107,6 +122,14 @@ html, body {
 #video-player {
   object-fit: contain;
 }
+
+#video-iframe {
+  touch-action: auto;
+}
+
+/* =========================
+   LOADING
+   ========================= */
 
 #loading {
   position: absolute;
@@ -120,7 +143,13 @@ html, body {
   font-size: 14px;
 }
 
-#loading.hidden { display: none; }
+#loading.hidden {
+  display: none;
+}
+
+/* =========================
+   ERROR
+   ========================= */
 
 #error-box {
   position: absolute;
@@ -136,9 +165,25 @@ html, body {
   text-align: center;
 }
 
-#error-box.show { display: flex; }
-#error-box strong { font-size: 16px; margin-bottom: 8px; }
-#error-box span { max-width: 500px; color: #aaa; font-size: 12px; line-height: 18px; }
+#error-box.show {
+  display: flex;
+}
+
+#error-box strong {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+#error-box span {
+  max-width: 500px;
+  color: #aaa;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* =========================
+   IKLAN / SENTUH PERTAMA
+   ========================= */
 
 #ad-overlay {
   position: absolute;
@@ -149,10 +194,17 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-#ad-overlay.hidden { display: none; }
+#ad-overlay.hidden {
+  display: none;
+}
 </style>
 </head>
+
 <body>
+
+<!-- =========================
+     WHATSAPP
+     ========================= -->
 
 <a href="https://whatsapp.com/channel/0029VbE0ay50gcfO26fbVg2r" target="_blank" rel="noopener noreferrer" class="wa-banner">
   <div class="wa-icon">💬</div>
@@ -163,22 +215,50 @@ html, body {
   <div class="wa-join">JOIN</div>
 </a>
 
+<!-- =========================
+     STREAM
+     ========================= -->
+
 <main class="stream-box">
+
   <div id="loading">Memuat siaran...</div>
 
   <div id="error-box">
     <strong>Siaran tidak dapat dimuat</strong>
-    <span id="error-message">Silakan coba kembali beberapa saat lagi atau pastikan link aktif.</span>
+    <span id="error-message">Silakan coba kembali beberapa saat lagi.</span>
   </div>
 
-  <video id="video-player" controls playsinline webkit-playsinline preload="metadata" controlsList="nodownload" crossorigin="anonymous"></video>
+  <video
+    id="video-player"
+    controls
+    playsinline
+    webkit-playsinline
+    preload="metadata"
+    controlsList="nodownload"
+    crossorigin="anonymous"
+  ></video>
 
-  <iframe id="video-iframe" title="Live Stream" allow="autoplay; encrypted-media; picture-in-picture; fullscreen; display-capture" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
+  <iframe
+    id="video-iframe"
+    src="about:blank"
+    title="Live Stream"
+    allow="autoplay; encrypted-media; picture-in-picture; fullscreen; display-capture"
+    allowfullscreen="true"
+    webkitallowfullscreen="true"
+    mozallowfullscreen="true"
+    referrerpolicy="no-referrer"
+    sandbox="allow-scripts allow-same-origin allow-presentation"
+  ></iframe>
 
   <div id="ad-overlay" role="button" aria-label="Lanjutkan ke video"></div>
+
 </main>
 
 <script>
+/* =========================
+   DAFTAR STREAM
+   ========================= */
+
 const matches = {
   "coma": { title: "muun", src: "https://starballtv012.blogspot.com/2026/10/coma.html" },
   "liga": { title: "player", src: "https://starballtv012.blogspot.com/2026/10/liga.html" },
@@ -200,11 +280,16 @@ const matches = {
   "mavil": { title: "player12", src: "https://starballtv012.blogspot.com/2026/10/mavil.html?m=1" }
 };
 
+/* =========================
+   AMBIL ?id=
+   ========================= */
+
 const params = new URLSearchParams(window.location.search);
 const matchId = (params.get("id") || "").trim().toLowerCase();
-const activeMatch = matches[matchId];
 
-document.title = activeMatch ? "Sports77HD - " + activeMatch.title : "Sports77HD - Live Stream";
+/* =========================
+   ELEMENT
+   ========================= */
 
 const video = document.getElementById("video-player");
 const iframe = document.getElementById("video-iframe");
@@ -212,9 +297,25 @@ const loading = document.getElementById("loading");
 const errorBox = document.getElementById("error-box");
 const errorMessage = document.getElementById("error-message");
 
-function showError(msg) {
+/* =========================
+   STREAM AKTIF & JUDUL
+   ========================= */
+
+const activeMatch = matches[matchId];
+
+if (activeMatch) {
+  document.title = "Sports77HD - " + activeMatch.title;
+} else {
+  document.title = "Sports77HD - Live Stream";
+}
+
+/* =========================
+   ERROR & LOADING
+   ========================= */
+
+function showError(message) {
   loading.classList.add("hidden");
-  errorMessage.textContent = msg;
+  errorMessage.textContent = message;
   errorBox.classList.add("show");
 }
 
@@ -222,15 +323,9 @@ function hideLoading() {
   loading.classList.add("hidden");
 }
 
-function getStreamType(url) {
-  if (!url) return null;
-  const cleanUrl = url.split("?")[0].toLowerCase();
-  if (cleanUrl.endsWith(".m3u8")) return "m3u8";
-  if (cleanUrl.endsWith(".mp4") || cleanUrl.endsWith(".webm") || cleanUrl.endsWith(".ogg")) return "video";
-  return "iframe"; // Karena link berupa .html blogspot, ini akan lari ke iframe
-}
-
-let hls = null;
+/* =========================
+   LOAD STREAM
+   ========================= */
 
 function loadStream(url) {
   if (!url) {
@@ -238,33 +333,19 @@ function loadStream(url) {
     return;
   }
 
-  const type = getStreamType(url);
+  // Karena sumber berupa link halaman HTML blogspot, muat menggunakan iframe
+  iframe.style.display = "block";
+  video.style.display = "none";
+  iframe.src = url;
 
-  if (type === "iframe") {
-    iframe.style.display = "block";
-    video.style.display = "none";
-    
-    // Tambahkan penanganan error jika iframe gagal load atau diblokir X-Frame-Options
-    iframe.src = url;
-    
-    // Fallback timer jika iframe gagal merespons *load event*
-    let iframeLoaded = false;
-    iframe.onload = function() {
-      iframeLoaded = true;
-      hideLoading();
-    };
-
-    setTimeout(() => {
-      if (!iframeLoaded) {
-        hideLoading(); // Tetap sembunyikan loading agar tidak mutar terus
-      }
-    }, 4000);
-    return;
-  }
-
-  // Handle m3u8 / mp4 logic jika di kemudian hari link berubah langsung ke file media
-  hideLoading();
+  iframe.addEventListener("load", function () {
+    hideLoading();
+  }, { once: true });
 }
+
+/* =========================
+   VALIDASI ID
+   ========================= */
 
 if (!matchId) {
   showError("Belum ada ID pertandingan. Contoh: ?id=coma");
@@ -274,7 +355,10 @@ if (!matchId) {
   loadStream(activeMatch.src);
 }
 
-// Bagian Iklan / Sentuh Pertama
+/* =========================
+   IKLAN / SENTUH PERTAMA
+   ========================= */
+
 const overlay = document.getElementById("ad-overlay");
 const TARGET_URL = "https://vt.tokopedia.com/t/ZS9AnMEc8ELsV-4tPMa/";
 let adOpened = false;
@@ -286,13 +370,6 @@ overlay.addEventListener("click", function () {
   window.open(TARGET_URL, "_blank", "noopener,noreferrer");
   overlay.classList.add("hidden");
 }, { once: true });
-
-window.addEventListener("beforeunload", function () {
-  if (hls) {
-    hls.destroy();
-    hls = null;
-  }
-});
 </script>
 
 </body>
